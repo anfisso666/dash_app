@@ -55,7 +55,7 @@ app.layout = html.Div(
                 html.H2("Анализ рентабельности аренды недвижимости"),
                 html.P([
                     "В рамках проведенного исследования были выполнены ",
-                    html.A("расчёты", href="https://github.com/username/project/blob/main/analysis.py", target="_blank"),
+                    html.A("расчеты", href="https://github.com/username/project/blob/main/analysis.py", target="_blank"),
                     ", по итогам которых подготовлен аналитический ",
                     html.A("отчёт", href="https://drive.google.com/file/d/example_report_id/view", target="_blank"),
                     ". Для более глубокого понимания выявленных закономерностей и трендов представляю интерактивную визуализацию ключевых показателей."
