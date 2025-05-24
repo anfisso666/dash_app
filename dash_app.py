@@ -42,27 +42,35 @@ except Exception as e:
     print(f"Произошла ошибка при загрузке данных: {e}")
 
 # Color palette
-colors = [ "#0969da", "#1f883d", "#cf222e", "#fb8500", "#8250df", "#0550ae", "#656d76", "#24292f", "#54aeff","#2da44e"]
-
+colors = ['#EC5F67', '#AB7967', '#5FB3B3', '#F99157', '#FAC863', '#99C794', '#6699CC', '#C594C5', '#4F5B66', '#CDD3DE']
 
 
 # Define the app layout
 app.layout = html.Div(
     className="main-container",  # Добавлен класс для основного контейнера
     children=[
+        # Title moved to header
+                html.H2("Анализ рентабельности аренды недвижимости"),
+                html.P([
+                    "В рамках проведенного исследования были выполнены ",
+                    html.A("расчёты", href="https://github.com/username/project/blob/main/analysis.py", target="_blank"),
+                    ", по итогам которых подготовлен аналитический ",
+                    html.A("отчёт", href="https://drive.google.com/file/d/example_report_id/view", target="_blank"),
+                    ". Для более глубокого понимания выявленных закономерностей и трендов представляю интерактивную визуализацию ключевых показателей."
+                ], className="under_title"),
+                html.Div(className="div"),
+                html.Div(className="z"),
         # Header Section
         html.Div(
             className="header",
             children=[
-                # Title moved to header
-                html.H2("Анализ рентабельности аренды недвижимости"),
                 # Filter Section
                 html.Div(
                     className="filter",
                     children=[
                         html.Div(
                             children=[
-                                html.Label("   "),
+                                # html.Label("   "),
                                 dcc.Dropdown(
                                     id="city-filter",
                                     options=[{"label": city, "value": city} for city in sorted(df["Город"].unique())],
@@ -72,7 +80,7 @@ app.layout = html.Div(
                                 )]),
                                 html.Div(
                             children=[
-                                html.Label("   "),
+                                # html.Label("   "),
                                 dcc.Dropdown(
                                     id="property-type-filter",
                                     options=[{"label": prop_type, "value": prop_type} for prop_type in sorted(df["Тип жилья"].unique())],
@@ -122,10 +130,9 @@ app.layout = html.Div(
                     ]
                 ),
                 
-                
-                
-            ]
+               ]
         ),
+        html.Div(className="div"),
            html.Div(id="kpi-line"),
         # KPI Section
         html.Div(
@@ -233,12 +240,11 @@ def create_kpi_card(title, value, unit):
     
     return html.Div(
         children=[
-            html.H5(title, style={"margin-bottom": "10px", "font-size": "1vw"}),
+            html.H5(title, className="kpi_h5"),#style={"margin-bottom": "10px", "font-size": "1vw"}),
             html.Div([
                 html.Span(
                     f"{formatted_value} {unit}",
-                    style={"font-size": "1.2vw", "font-weight": "bold", "color": "#163E60"}
-                )
+                    className="kpi_h2"),#
             ])
         ]
     )
