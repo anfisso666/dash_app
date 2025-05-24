@@ -20,6 +20,8 @@ app = dash.Dash(
     meta_tags=[{"name": "viewport", "content": "width=device-width, initial-scale=1"}],
     suppress_callback_exceptions=True
 )
+server = app.server  # Эта строка обязательна для Render!
+
 # Load the data with error handling
 try:
     data_file = 'data_f.csv'
