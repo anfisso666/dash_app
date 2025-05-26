@@ -44,98 +44,120 @@ except Exception as e:
     print(f"Произошла ошибка при загрузке данных: {e}")
 
 # Color palette
-colors = ['#EC5F67', '#AB7967', '#5FB3B3', '#F99157', '#FAC863', '#99C794', '#6699CC', '#C594C5', '#4F5B66', '#CDD3DE']
-
+colors = ['#0066CC', '#004499', '#2C3E50', '#34495E', '#5DADE2', '#3498DB', '#1ABC9C', '#16A085', '#F39C12', '#E67E22']
 
 # Define the app layout
 app.layout = html.Div(
-    className="main-container",  # Добавлен класс для основного контейнера
+    className="main-container",
     children=[
-        # Title moved to header
-                html.H2("Анализ рентабельности аренды недвижимости"),
-                html.P([
-                    "В рамках проведенного исследования были выполнены ",
-                    html.A("расчеты", href="https://github.com/username/project/blob/main/analysis.py", target="_blank"),
-                    ", по итогам которых подготовлен аналитический ",
-                    html.A("отчёт", href="https://drive.google.com/file/d/example_report_id/view", target="_blank"),
-                    ". Для более глубокого понимания выявленных закономерностей и трендов представляю интерактивную визуализацию ключевых показателей."
-                ], className="under_title"),
-                html.Div(className="div"),
-                html.Div(className="z"),
-        # Header Section
+        # Title section
+        html.H2("Анализ рентабельности аренды недвижимости"),
+        html.P([
+            "В рамках проведенного исследования были выполнены ",
+            html.A("расчеты", href="https://github.com/anfisso666/portfolio/blob/bcd511accaac13b651454acd13cf34c9e218b7e0/cian_analysis.ipynb", target="_blank"),
+            ", по итогам которых подготовлен аналитический ",
+            html.A("отчёт", href="https://drive.google.com/file/d/1WqB5XILFmQJv-J_UNJSODtm5ht34r5Ec/view?usp=sharing", target="_blank"),
+            ". Для более глубокого понимания выявленных закономерностей и трендов представляю интерактивную визуализацию ключевых показателей."
+        ], className="under_title"),
+        
+        # Decorative elements
+        html.Div(className="div"),
+        html.Div(className="z"),
+        
+        # Header Section with filters
         html.Div(
             className="header",
             children=[
-                # Filter Section
                 html.Div(
                     className="filter",
                     children=[
+                        # City filter
                         html.Div(
                             children=[
-                                # html.Label("   "),
+                                html.Label("Города", className="filter-label"),
                                 dcc.Dropdown(
                                     id="city-filter",
                                     options=[{"label": city, "value": city} for city in sorted(df["Город"].unique())],
                                     value=[],
                                     placeholder="Выберите город(а)",
-                                    multi=True
-                                )]),
-                                html.Div(
+                                    multi=True,
+                                    className="professional-dropdown"
+                                )
+                            ]
+                        ),
+                        
+                        # Property type filter
+                        html.Div(
                             children=[
-                                # html.Label("   "),
+                                html.Label("Тип жилья", className="filter-label"),
                                 dcc.Dropdown(
                                     id="property-type-filter",
                                     options=[{"label": prop_type, "value": prop_type} for prop_type in sorted(df["Тип жилья"].unique())],
                                     value=[],
                                     placeholder="Выберите тип жилья",
-                                    multi=True
-                                )]),
-                                    html.Div(
-                                    children=[
-                                        html.Label("Площадь (кв.м.):"),
-                                        dcc.RangeSlider(
-                                            id="area-range-filter",
-                                            min=int(df["Площадь"].min()),
-                                            max=int(df["Площадь"].max()),
-                                            step=1,
-                                            marks={
-                                                int(df["Площадь"].min()): {'label': str(int(df["Площадь"].min())),
-                                                                        'style': {'color': '#ecf0f1', 'font-weight': 'bold'}},
-                                                int(df["Площадь"].max()): {'label': str(int(df["Площадь"].max())),
-                                                                        'style': {'color': '#ecf0f1', 'font-weight': 'bold'}}
-                                            },
-                                            value=[int(df["Площадь"].min()), int(df["Площадь"].max())]
-                                        ),
-                                    ]
+                                    multi=True,
+                                    className="professional-dropdown"
+                                )
+                            ]
+                        ),
+                        
+                        # Area range filter
+                        html.Div(
+                            children=[
+                                html.Label("Площадь (кв.м.)", className="filter-label"),
+                                dcc.RangeSlider(
+                                    id="area-range-filter",
+                                    min=int(df["Площадь"].min()),
+                                    max=int(df["Площадь"].max()),
+                                    step=1,
+                                    marks={
+                                        int(df["Площадь"].min()): {
+                                            'label': str(int(df["Площадь"].min())),
+                                            'style': {'color': 'rgba(255, 255, 255, 0.9)', 'font-weight': '600', 'font-size': '12px'}
+                                        },
+                                        int(df["Площадь"].max()): {
+                                            'label': str(int(df["Площадь"].max())),
+                                            'style': {'color': 'rgba(255, 255, 255, 0.9)', 'font-weight': '600', 'font-size': '12px'}
+                                        }
+                                    },
+                                    value=[int(df["Площадь"].min()), int(df["Площадь"].max())],
+                                    className="professional-slider"
                                 ),
-                                # ROI Range Filter
-                                html.Div(
-                                    children=[
-                                        html.Label("ROI:"),
-                                        dcc.RangeSlider(
-                                            id="roi-range-filter",
-                                            min=int(df["ROI"].min()),
-                                            max=int(df["ROI"].max()),
-                                            step=1,
-                                            marks={
-                                                int(df["ROI"].min()): {'label': str(int(df["ROI"].min())),
-                                                                        'style': {'color': '#ecf0f1', 'font-weight': 'bold'}},
-                                                int(df["ROI"].max()): {'label': str(int(df["ROI"].max())),
-                                                                        'style': {'color': '#ecf0f1', 'font-weight': 'bold'}}
-                                            },
-                                            value=[int(df["ROI"].min()), int(df["ROI"].max())]
-                                        ),
-                                    ]
+                            ]
+                        ),
+                        
+                        # ROI Range Filter
+                        html.Div(
+                            children=[
+                                html.Label("ROI (%)", className="filter-label"),
+                                dcc.RangeSlider(
+                                    id="roi-range-filter",
+                                    min=int(df["ROI"].min()),
+                                    max=int(df["ROI"].max()),
+                                    step=1,
+                                    marks={
+                                        int(df["ROI"].min()): {
+                                            'label': str(int(df["ROI"].min())),
+                                            'style': {'color': 'rgba(255, 255, 255, 0.9)', 'font-weight': '600', 'font-size': '12px'}
+                                        },
+                                        int(df["ROI"].max()): {
+                                            'label': str(int(df["ROI"].max())),
+                                            'style': {'color': 'rgba(255, 255, 255, 0.9)', 'font-weight': '600', 'font-size': '12px'}
+                                        }
+                                    },
+                                    value=[int(df["ROI"].min()), int(df["ROI"].max())],
+                                    className="professional-slider"
                                 ),
-                        #     ]
-                        # ),
+                            ]
+                        ),
                     ]
                 ),
-                
-               ]
+            ]
         ),
-        html.Div(className="div"),
-           html.Div(id="kpi-line"),
+        
+        # KPI divider line
+        html.Div(id="kpi-line"),
+        
         # KPI Section
         html.Div(
             className="kpi",
@@ -150,49 +172,59 @@ app.layout = html.Div(
             children=[
                 # ROI Factors Analysis Section
                 html.Div(
+                    className="chart-section",
                     children=[
                         html.H3("Анализ факторов, влияющих на ROI"),
                         html.Div(
-                            id="roi-factors-analysis-container"
+                            id="roi-factors-analysis-container",
+                            className="chart-container"
                         )
                     ]
                 ),
                 
                 # Overview Section
                 html.Div(
+                    className="chart-section",
                     children=[
                         html.Div(
-                            id="overview-content"
+                            id="overview-content",
+                            className="chart-container"
                         )
                     ]
                 ),
                 
                 # Top Objects Section
                 html.Div(
+                    className="table-section",
                     children=[
                         html.H3("ТОП-10 объектов по ROI"),
                         html.Div(
-                            id="top-objects-table-container"
+                            id="top-objects-table-container",
+                            className="table-container"
                         )
                     ]
                 ),
                 
                 # Comparative Analysis Section
                 html.Div(
+                    className="chart-section",
                     children=[
                         html.H3("Сравнительный анализ по типам жилья и городам"),
                         html.Div(
-                            id="comparative-analysis-container"
+                            id="comparative-analysis-container",
+                            className="chart-container"
                         )
                     ]
                 ),
                 
                 # ROI Range Chart Section
                 html.Div(
+                    className="chart-section",
                     children=[
                         html.H3("Диапазон значений ROI по городам"),
                         html.Div(
-                            id="roi-range-chart-container"
+                            id="roi-range-chart-container",
+                            className="chart-container"
                         )
                     ]
                 ),
@@ -692,46 +724,7 @@ def update_top_objects_table(selected_cities, selected_property_types, area_rang
             }
         ]
     )
-        # table = dash_table.DataTable(
-        #     id='data-table',
-        #     columns=columns,
-        #     data=table_data,
-        #     markdown_options={"link_target": "_blank"},  # Важно! Это заставляет все ссылки открываться в новой вкладке
-        #     style_table={
-        #         'overflowX': 'auto',
-        #         'width': '100%'
-        #     },
-        #     style_cell={
-        #         'textAlign': 'left',
-        #         'padding': '8px',
-        #         'fontFamily': 'Arial, sans-serif'
-        #     },
-        #     style_header={
-        #         'backgroundColor': '#163E60',
-        #         'color': 'white',
-        #         'fontWeight': 'bold',
-        #         'textAlign': 'center'
-        #     },
-        #     style_data_conditional=[
-        #         {
-        #             'if': {'row_index': 'odd'},
-        #             'backgroundColor': '#f2f2f2'
-        #         }
-        #     ],
-        #     style_cell_conditional=[
-        #         {
-        #             'if': {'column_id': 'Ссылка'},
-        #             'color': '#0066cc',
-        #             'textDecoration': 'underline',
-        #             'cursor': 'pointer'
-        #         }
-        #     ],
-        #     page_size=10,
-        #     sort_action='native',
-        #     filter_action='native',
-        #     style_as_list_view=True
-        # )
-        
+      
         return table
         
     except Exception as e:
