@@ -667,7 +667,7 @@ def update_top_objects_table(selected_cities, selected_property_types, area_rang
         # Стили заголовков
         style_header={
             'backgroundColor': '#f8f9fa',
-            'color': '#E8E8E8',
+            'color': '#3e3e3e',
             'fontWeight': '600',
             'textAlign': 'left',
             'textTransform': 'uppercase',
